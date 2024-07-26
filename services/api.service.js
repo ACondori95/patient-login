@@ -106,10 +106,32 @@ const getProductVariations = async () => {
   }
 };
 
+const sendOrderToPharmacy = async (orderIdentifier) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/orders/actions/sendToPharmacyRecipients`,
+      {orderIdentifier},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${process.env.TELEGRA_ACCESS_TOKEN}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error response data:", error.response?.data);
+    console.error("Error response headers:", error.response?.headers);
+    throw new Error("Failed to send order to pharmacy");
+  }
+};
+
 module.exports = {
   authenticateClient,
   createPatient,
   getPatientByEmail,
   updatePatient,
   getProductVariations,
+  sendOrderToPharmacy,
 };
