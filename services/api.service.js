@@ -6,7 +6,7 @@ const PASSWORD = process.env.TELEGRA_API_PASSWORD;
 
 const authenticateClient = async () => {
   try {
-    const response = await axios.post(
+    const response = await axios.get(
       `${BASE_URL}/auth/client`,
       {},
       {
@@ -17,8 +17,8 @@ const authenticateClient = async () => {
         },
       }
     );
-    console.log(response);
-    return response.data.token;
+    console.log(JSON.stringify(response.data.token));
+    return JSON.stringify(response.data.token);
   } catch (error) {
     console.error("Error response data:", error.response?.data);
     console.error("Error response status:", error.response?.status);
